@@ -1,0 +1,79 @@
+
+---
+
+# `gramatica.bnf`
+
+```bnf
+<programa> ::= "program" <identificador> "{" <sentencias> "}"
+
+<sentencias> ::= <sentencia> <sentencias>
+               | ε
+
+<sentencia> ::= <declaracion>
+              | <asignacion> ";"
+              | <sentencia_if>
+              | <sentencia_while>
+              | <sentencia_do_while>
+              | <sentencia_for>
+
+<declaracion> ::= <tipo> <identificador> ";"
+                | <tipo> <identificador> "=" <expresion> ";"
+
+<tipo> ::= "int"
+         | "float"
+         | "bool"
+         | "string"
+
+<asignacion> ::= <identificador> "=" <expresion>
+
+<sentencia_if> ::= "if" "(" <expresion> ")" <bloque>
+                 | "if" "(" <expresion> ")" <bloque> "else" <bloque>
+                 | "if" "(" <expresion> ")" <bloque> "else" <sentencia_if>
+
+<sentencia_while> ::= "while" "(" <expresion> ")" <bloque>
+
+<sentencia_do_while> ::= "do" <bloque> "while" "(" <expresion> ")" ";"
+
+<sentencia_for> ::= "for" "(" <asignacion> ";" <expresion> ";" <asignacion> ")" <bloque>
+
+<bloque> ::= "{" <sentencias> "}"
+
+<expresion> ::= <expresion_or>
+
+<expresion_or> ::= <expresion_and>
+                 | <expresion_or> "||" <expresion_and>
+
+<expresion_and> ::= <expresion_igualdad>
+                  | <expresion_and> "&&" <expresion_igualdad>
+
+<expresion_igualdad> ::= <expresion_comparacion>
+                       | <expresion_igualdad> "==" <expresion_comparacion>
+                       | <expresion_igualdad> "!=" <expresion_comparacion>
+
+<expresion_comparacion> ::= <expresion_suma>
+                          | <expresion_comparacion> "<" <expresion_suma>
+                          | <expresion_comparacion> "<=" <expresion_suma>
+                          | <expresion_comparacion> ">" <expresion_suma>
+                          | <expresion_comparacion> ">=" <expresion_suma>
+
+<expresion_suma> ::= <expresion_multiplicacion>
+                   | <expresion_suma> "+" <expresion_multiplicacion>
+                   | <expresion_suma> "-" <expresion_multiplicacion>
+
+<expresion_multiplicacion> ::= <expresion_unaria>
+                             | <expresion_multiplicacion> "*" <expresion_unaria>
+                             | <expresion_multiplicacion> "/" <expresion_unaria>
+
+<expresion_unaria> ::= "!" <expresion_unaria>
+                     | "-" <expresion_unaria>
+                     | <expresion_primaria>
+
+<expresion_primaria> ::= <literal_entero>
+                       | <literal_flotante>
+                       | <literal_booleano>
+                       | <literal_cadena>
+                       | <identificador>
+                       | "(" <expresion> ")"
+
+<literal_booleano> ::= "true"
+                     | "false"
